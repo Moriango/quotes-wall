@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="main.js"></script>
+    <style>
+        .box {
+            border: 2px solid black;
+            padding: 0px 0px 0px 30px;
+            margin: 6px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/login">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li><a class="navbar-brand" href="/edit">Edit my Account</a></li>
+            <a class="nav-link" href="/logout">Log Out     </a>
+            <li><h4>Welcome to the Quotes Wall, {{request.session.fname}}</h4></li>
+            <li class="nav-item">
+            </li>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Quotes Information</h3>
+                {% for x in quotes %}
+                <div class="box">
+                    <p>{{x.content}}</p>
+                    <p>Quote by, {{x.author}}</p>
+                    <p>Posted by <a href="/show/{{x.posted_by.id}}">{{x.posted_by.fname}}</a></p>
+                    <a href="/destroy/{{x.id}}">Delete</a>
+                    {{x.users_liked.all|length}} people liked this.
+                    <a href="/likes/{{x.id}}">Like</a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-sm-5">
+                <h3>Add a Quote!</h3>
+                <form action="/create" method="POST">
+                {% csrf_token %}
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="author" placeholder="Author">
+                    </div>
+                    <div class="col-md-8">
+                        <input type="textarea" class="form-control" name="content" placeholder="Quote">
+                    <button type="submit" name="quote" class="btn btn-primary">Submit</button>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <li>{{message}}</li>
+                        {% endfor %}
+                    {% endif %}       
+                    </div>
+                </form>
+            </div>
+   
+
+
+
+
+
+
+
+
+
+
+
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="main.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/login">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li><a class="navbar-brand" href="/edit">Edit my Account</a></li>
+            <a class="nav-link" href="/logout">Log Out     </a>
+            <li><h4>Please Edit your account, {{request.session.fname}}</h4></li>
+            <li class="nav-item">
+            </li>
+        </div>
+    </nav>
+    <form action="/create_edit/" method="POST">
+    {% csrf_token %}
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">First Name</label>
+            <div class="col-sm-10">
+            <input type="text" name="fname" class="form-control" placeholder="{{ user.fname }}" value="{{ user.fname }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Last Name</label>
+            <div class="col-sm-10">
+            <input type="text" name="lname" class="form-control"  placeholder="{{ user.lname }}" value="{{ user.lname }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+            <input type="text" name="email" class="form-control" placeholder="{{ user.email }}" value="{{ user.email }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+            <button type="submit" name="login" value="Login" class="btn btn-primary">Edit Account!</button>
+            </div>
+        </div>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <li>{{message}}</li>
+        {% endfor %}    
+    {% endif %}       
+</body>
+</html>
